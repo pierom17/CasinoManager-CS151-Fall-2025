@@ -1,4 +1,4 @@
-public abstract class Game {
+public abstract class Game implements Playable{
     private String gameName;
     private int gameID;
     private double requiredBet;
