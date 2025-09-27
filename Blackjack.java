@@ -1,20 +1,38 @@
 public class Blackjack extends Game implements Playable {
     
+    private boolean roundOver = false;
+    private boolean playerStands = false;
+    private boolean dealerStands = false;
+    private double playerHandValue = 0.0;
+    private double dealerHandValue = 0.0;
+    private double currentPlayerBet = 0.0;
+
     public Blackjack() {
         super("Blackjack", 10.0);
+    }
+    public double raiseBet(double amount){
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Bet increase must be positive");
+        }
+        currentPlayerBet += amount;
+        return currentPlayerBet;
     }
     /**
      * Deals the cards to the players and the dealer
      */
-    public void deal(){
+    private void deal(){
         
     }
-    public void hit(){
+    private void hit(){
 
     }
     private void stand(){ 
     }
-    // Double the bet, take one more card, and end turn
+    /**
+     * Double the bet, take one more card, and end turn
+     * TODO: implement method once Player class is created
+     * @return bet doubled
+     */
     private double doubleDown(){
         // get bet from the Player class
         //return bet *= 2.0;
@@ -42,7 +60,7 @@ public class Blackjack extends Game implements Playable {
     }
     @Override
     public double getRequiredBet() {
-        return 0;
+        return 10.0;
     }
     @Override
     public String toString() {
