@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Craps extends Game implements Playable{
     
     public Craps(){
@@ -5,7 +7,16 @@ public class Craps extends Game implements Playable{
     }
 
     public int rollDice(){
+        int dice1;
+        int dice2;
 
+        Random r = new Random();
+
+        dice1 = r.nextInt(6) + 1;
+        dice2 = r.nextInt(6) + 1;
+        int totalDice = dice1 + dice2;
+
+        return totalDice;
     }
 
     public bet(){
