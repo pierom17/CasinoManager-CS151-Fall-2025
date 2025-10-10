@@ -9,7 +9,6 @@ public abstract class Game implements Playable{
     private boolean gameStarted;
     private boolean isAssigned = false;
 
-    private static final Random rand = new Random();
     private static final List<Integer> usedGameIDs = new ArrayList<>();
     private static int counter = 0;
 
@@ -27,21 +26,25 @@ public abstract class Game implements Playable{
         return gameID;
     }
     public void setGameID() {
+        Random rand = new Random();
+        int ID = 0;
+        boolean uniqueGameID = false;
+        
         if (isAssigned) {
             throw new UnsupportedOperationException("Game ID is set. No further changes allowed");
         }
-        boolean uniqueGameID = false;
         while (!uniqueGameID) {
-            int ID = 10000 + rand.nextInt(90000);
+            ID = 10000 + rand.nextInt(90000);
             uniqueGameID = true;
             for (int i = 0; i < counter; i++) {
-                if (usedGameIDs[i] = ID) {
+                if (usedGameIDs.get(i).equals(ID)) {
                     uniqueGameID = false;
                     break;
                 }
             }
         }
-        usedGameIDs[counter++] = ID;
+        usedGameIDs.add(ID);
+        counter++;
         this.gameID = ID;
     }
 
