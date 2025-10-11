@@ -44,6 +44,7 @@ public class Craps extends Game implements Playable{
                 if(diceRoll == 7 || diceRoll == 11){
                     System.out.println("Dice rolled a: " + diceRoll);
                     System.out.println("You win!");
+                    addEarnedMoney(amount);
                     done = true;
                 }
                 else if(diceRoll == 2 || diceRoll == 3 || diceRoll == 12){
@@ -71,6 +72,7 @@ public class Craps extends Game implements Playable{
                 if(diceRoll == 2 || diceRoll == 3){
                     System.out.println("Dice rolled a: " + diceRoll);
                     System.out.println("You win!");
+                    addEarnedMoney(amount);
                     done = true;
                 }
                 else if(diceRoll == 7 || diceRoll == 11){
@@ -84,6 +86,10 @@ public class Craps extends Game implements Playable{
                 }
             }
         }
+    }
+
+    private void addEarnedMoney(int m){
+        this.moneyEarned += m;
     }
 
     @Override //from Playable.java
