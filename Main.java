@@ -36,10 +36,19 @@ public class Main {
             switch (choice) {
                 case 1:
                     System.out.print("Roulette");
+                    Roulette r = new Roulette();
+                    Table t1 = new Table(r);
+                    t1.playGame();
                 case 2:
                     System.out.print("Blackjack");
+                    Blackjack bj = new Blackjack();
+                    Table t2 = new Table(bj);
+                    t2.playGame();
                 case 3:
                     System.out.print("Craps");
+                    Craps c = new Craps();
+                    Table t3 = new Table(c);
+                    t3.playGame();
             }
             System.out.println("! Good luck!");
         }
