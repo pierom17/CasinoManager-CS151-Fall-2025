@@ -2,11 +2,11 @@ import java.util.ArrayList;
 
 public class Table{
     private Game gameType;
-    private int numOfPlayers;
+    //private int numOfPlayers;
 
-    public Table (String gameName, int numOfPlayers){
-        this.gameType = new gameName();
-        this.numOfPlayers = numOfPlayers;
+    public Table (Game gameName){
+        this.gameType = gameName;
+        //this.numOfPlayers = numOfPlayers;
     }
 
     public void playGame() throws NumberOutOfRangeException{
