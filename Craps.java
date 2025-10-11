@@ -1,9 +1,10 @@
 import java.util.Random;
 
 public class Craps extends Game implements Playable{
+    private moneyEarned = 0;
     
     public Craps(){
-        super("Craps", 1);
+        super("Craps", 1.0);
     }
 
     public int rollDice(){
@@ -19,35 +20,97 @@ public class Craps extends Game implements Playable{
         return totalDice;
     }
 
-    public bet(){
+    public void bet() throws NumberOutOfRangeException{
+        System.out.println("What would you like to bet on? (Type the option number)"); // Player can choose one option to bet on
+        System.out.println("1. Pass Line");
+        System.out.println("2. Don't Pass Line");
+        Scanner scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
 
+        if(choice != 1 || choice != 2){
+            throw new NumberOutOfRangeException("Choice must be either 1 or 2");
+        }
+
+        if(choice != 1){
+            System.out.println("How much would you like to bet?");
+            int amount = scanner.nextInt();
+
+            boolean done = false;
+            while(done != true){
+                System.out.println("Rolling dice...");
+
+                int diceRoll = rollDice();
+
+                if(diceRoll == 7 || diceRoll == 11){
+                    System.out.println("Dice rolled a: " + diceRoll);
+                    System.out.println("You win!");
+                    done = true;
+                }
+                else if(diceRoll == 2 || diceRoll == 3 || diceRoll == 12){
+                    System.out.println("Dice rolled a: " + diceRoll);
+                    System.out.println("You lose :(");
+                    done = true;
+                }
+                else{
+                    System.out.println("Dice rolled a: " + diceRoll);
+                    System.out.println("That means a push, rerolling dice");
+                }
+            }
+        }
+
+        if(choice != 2){
+            System.out.println("How much would you like to bet?");
+            int amount = scanner.nextInt();
+
+            boolean done = false;
+            while(done != true){
+                System.out.println("Rolling dice...");
+
+                int diceRoll = rollDice();
+
+                if(diceRoll == 2 || diceRoll == 3){
+                    System.out.println("Dice rolled a: " + diceRoll);
+                    System.out.println("You win!");
+                    done = true;
+                }
+                else if(diceRoll == 7 || diceRoll == 11){
+                    System.out.println("Dice rolled a: " + diceRoll);
+                    System.out.println("You lose :(");
+                    done = true;
+                }
+                else{
+                    System.out.println("Dice rolled a: " + diceRoll);
+                    System.out.println("That means a push, rerolling dice");
+                }
+            }
+        }
     }
 
-    @Override
+    @Override //from Playable.java
     public void play(){
         setGameStarted(true);
-        rollDice();
+        bet();
     }
-    @Override
+    @Override //from Playable.java
     public void rules(){
-
+        System.out.println("Simplified Craps Rule:");
+        System.out.println("Choose to bet either the pass or don't pass line");
+        System.out.println("Roll two dice and the sum if your dice score");
+        System.out.println("If you bet the pass line and roll a score of 7 or 11 you win. If you roll a 2, 3 or 12 you lose");
+        System.out.println("If you bet the don't pass line and roll a score of 2 or 3 you win. If you roll a 7 or 11 you lose");
+        System.out.println("All other numbers are a push(tie)");
     }
-    @Override
+    @Override //from Playable.java
     public double earned(){
-        return 0.0;
+        return moneyEarned;
     }
-    @Override
+    @Override //from Game.java
     public String getName() {
         //for now:
         return "Craps";
     }
-    @Override
+    @Override //from Game.java
     public double getRequiredBet() {
-        return 1;
+        return 1.0;
     }
-    @Override
-    public String toString() {
-        return "Game: " + getName() + ", Required Bet: $" + getRequiredBet();
-    }
-
 }
