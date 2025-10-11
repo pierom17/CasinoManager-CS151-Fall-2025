@@ -27,11 +27,11 @@ public class Craps extends Game implements Playable{
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
 
-        if(choice != 1 || choice != 2){
+        if(choice != 1 && choice != 2){
             throw new NumberOutOfRangeException("Choice must be either 1 or 2");
         }
 
-        if(choice != 1){
+        if(choice == 1){
             System.out.println("How much would you like to bet?");
             int amount = scanner.nextInt();
 
@@ -59,7 +59,7 @@ public class Craps extends Game implements Playable{
             }
         }
 
-        if(choice != 2){
+        else if(choice == 2){
             System.out.println("How much would you like to bet?");
             int amount = scanner.nextInt();
 
