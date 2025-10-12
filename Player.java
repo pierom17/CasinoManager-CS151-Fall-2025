@@ -1,13 +1,18 @@
 import java.util.Random;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Player {
     private String playerName;
     private int playerID;
     private double playerBalance;
+    private boolean isAssigned = false;
+
+    private static final List<Integer> usedPlayerIDs = new ArrayList<>();
+    private static int counter = 0;
 
     public Player(String playerName, double playerBalance) {
         this.playerName = playerName;
-        this.playerID = generateID();
         this.playerBalance = playerBalance;
     }
 
@@ -18,9 +23,27 @@ public class Player {
     public int getPlayerID() {
         return playerID;
     }
-    private int generateID() {
+    public void setPlayerID() {
         Random rand = new Random();
-        return 10000 + rand.nextInt(90000);
+        int ID = 0;
+        boolean uniqueGameID = false;
+
+        if (isAssigned) {
+            throw new UnsupportedOperationException("Game ID is set. No further changes allowed");
+        }
+        while (!uniqueGameID) {
+            ID = 10000 + rand.nextInt(90000);
+            uniqueGameID = true;
+            for (int i = 0; i < counter; i++) {
+                if (usedPlayerIDs.get(i).equals(ID)) {
+                    uniqueGameID = false;
+                    break;
+                }
+            }
+        }
+        usedPlayerIDs.add(ID);
+        counter++;
+        this.playerID = ID;
     }
 
     public void displayPlayerBalance() {
@@ -48,5 +71,10 @@ public class Player {
             playerBalance -= amount;
             System.out.printf("$%.2f withdrawn successfully from %s's account.", amount, playerBalance);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Player Name: " + playerName + "\nPlayer ID: " + playerID + "\nPlayer Balance: $" + playerBalance;
     }
 }
