@@ -29,7 +29,7 @@ public class Player {
         boolean uniqueGameID = false;
 
         if (isAssigned) {
-            throw new UnsupportedOperationException("Game ID is set. No further changes allowed");
+            throw new UnsupportedOperationException("Player ID is set. No further changes allowed");
         }
         while (!uniqueGameID) {
             ID = 10000 + rand.nextInt(90000);
