@@ -12,13 +12,12 @@ public class Main {
     }
     
     public static int menu() {
-        int choice = UserInput.readNextInt("  What game would you like to play?\n");
-
-        System.out.println("  What game would you like to play? ");
         System.out.println("            1. Roulette             ");
         System.out.println("            2. Blackjack            ");
         System.out.println("            3. Craps                ");
-        System.out.println("            0. Exit                 ");        
+        System.out.println("            0. Exit                 ");     
+        
+        int choice = UserInput.readNextInt("  What game would you like to play?\n");  
 
         if ( choice < 0 || choice > 3 ) {
             throw new IllegalArgumentException("Invalid menu choice");
@@ -30,17 +29,17 @@ public class Main {
             System.out.print("You chose ");
             switch (choice) {
                 case 1:
-                    System.out.print("Roulette");
+                    System.out.print("Roulette\n");
                     Roulette r = new Roulette();
                     Table t1 = new Table(r);
                     t1.playGame();
                 case 2:
-                    System.out.print("Blackjack");
+                    System.out.print("Blackjack\n");
                     Blackjack bj = new Blackjack();
                     Table t2 = new Table(bj);
                     t2.playGame();
                 case 3:
-                    System.out.print("Craps");
+                    System.out.print("Craps\n");
                     Craps c = new Craps();
                     Table t3 = new Table(c);
                     t3.playGame();
