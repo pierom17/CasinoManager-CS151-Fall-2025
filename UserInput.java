@@ -5,6 +5,19 @@ public class UserInput {
 
     private UserInput() {}
 
+    public static String readNextLine(String userPrompt) {
+        System.out.print(userPrompt);
+        String userInput = scanner.nextLine();
+
+        if (userInput.equalsIgnoreCase("exit")) {
+            System.out.println("Exiting the game...");
+            scanner.close();
+            System.exit(0);
+        }
+
+        return userInput;
+    }
+    
     public static int readNextInt(String userPrompt) {
         while (true) {
             System.out.print(userPrompt);
