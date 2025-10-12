@@ -75,6 +75,6 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player Name: " + playerName + "\nPlayer ID: " + playerID + "\nPlayer Balance: $" + playerBalance;
+        return "    Your assigned ID is: " + playerID;
     }
 }
