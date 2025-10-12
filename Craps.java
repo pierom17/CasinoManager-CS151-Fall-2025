@@ -1,7 +1,8 @@
 import java.util.Random;
+import java.util.Scanner;
 
 public class Craps extends Game implements Playable{
-    private moneyEarned = 0;
+    private int moneyEarned = 0;
     
     public Craps(){
         super("Craps", 1.0);
@@ -20,7 +21,7 @@ public class Craps extends Game implements Playable{
         return totalDice;
     }
 
-    public void bet() throws NumberOutOfRangeException{
+    public void bet() throws IllegalArgumentException {
         System.out.println("What would you like to bet on? (Type the option number)"); // Player can choose one option to bet on
         System.out.println("1. Pass Line");
         System.out.println("2. Don't Pass Line");
@@ -28,7 +29,7 @@ public class Craps extends Game implements Playable{
         int choice = scanner.nextInt();
 
         if(choice != 1 && choice != 2){
-            throw new NumberOutOfRangeException("Choice must be either 1 or 2");
+            throw new IllegalArgumentException("Choice must be either 1 or 2");
         }
 
         if(choice == 1){
