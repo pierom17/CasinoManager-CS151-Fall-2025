@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Main {
     private static int menuChoice;
 
@@ -14,16 +12,13 @@ public class Main {
     }
     
     public static int menu() {
-        int choice;
+        int choice = UserInput.readNextInt("  What game would you like to play?\n");
 
-        Scanner scanner = new Scanner(System.in);
         System.out.println("  What game would you like to play? ");
         System.out.println("            1. Roulette             ");
         System.out.println("            2. Blackjack            ");
         System.out.println("            3. Craps                ");
         System.out.println("            0. Exit                 ");        
-        choice = scanner.nextInt();
-        scanner.close();
 
         if ( choice < 0 || choice > 3 ) {
             throw new IllegalArgumentException("Invalid menu choice");
