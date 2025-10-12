@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Table{
     private Game gameType;
@@ -9,7 +9,7 @@ public class Table{
         //this.numOfPlayers = numOfPlayers;
     }
 
-    public void playGame() throws NumberOutOfRangeException{
+    public void playGame() throws IllegalArgumentException{
         //gameType newGame = gameType();
         boolean playAgain = true;
         gameType.play();
@@ -22,7 +22,7 @@ public class Table{
             int choice = scanner.nextInt();
 
             if(choice != 1 && choice != 2){
-                throw new NumberOutOfRangeException("Choice must be either 1 or 2");
+                throw new IllegalArgumentException("Choice must be either 1 or 2");
             }
             if(choice == 1){
                 continue;
