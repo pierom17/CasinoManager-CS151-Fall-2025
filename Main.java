@@ -2,9 +2,17 @@ public class Main {
     private static int menuChoice;
 
     public static void main(String args[]) {
-        System.out.println("       Welcome to our Casino!       ");
+        String name = UserInput.readNextLine("Please enter your name: ");
+        double balance = UserInput.readNextInt("Enter starting balance: ");
+        System.out.println();
+        System.out.printf("    Welcome to our Casino %s!       ", name);
+        System.out.println();
+        System.out.printf("  Your starting balance is: %.2f       ", balance);
+        System.out.println();
+        Player player = new Player(name, balance);
+        player.setPlayerID();
+        System.out.println(player);
         
-
         do {
             menuChoice = menu();
         }
@@ -12,6 +20,7 @@ public class Main {
     }
     
     public static int menu() {
+        System.out.println();
         System.out.println("            1. Roulette             ");
         System.out.println("            2. Blackjack            ");
         System.out.println("            3. Craps                ");
