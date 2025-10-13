@@ -12,8 +12,9 @@ public class Table{
     public void playGame() throws IllegalArgumentException{
         //gameType newGame = gameType();
         boolean playAgain = true;
-        gameType.play();
+        
         while(playAgain == true){
+            gameType.play();
             System.out.println("Would you like to play again? (Type the option number)"); // Player can choose one option to bet on
             System.out.println("1. Yes");
             System.out.println("2. No");
