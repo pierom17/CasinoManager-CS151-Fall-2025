@@ -11,10 +11,14 @@ public class Blackjack extends Game implements Playable {
         super("Blackjack", 10.0);
     }
     public double raiseBet(double amount){
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Bet increase must be positive");
+        try {
+            if (amount <= 0) {
+                throw new IllegalArgumentException("Bet increase must be positive");
+            }
+            currentPlayerBet += amount;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
         }
-        currentPlayerBet += amount;
         return currentPlayerBet;
     }
     /**
