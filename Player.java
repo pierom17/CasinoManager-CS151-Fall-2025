@@ -6,7 +6,6 @@ public class Player {
     private String playerName;
     private int playerID;
     private double playerBalance;
-    private boolean isAssigned = false;
 
     private static final List<Integer> usedPlayerIDs = new ArrayList<>();
     private static int counter = 0;
@@ -28,9 +27,6 @@ public class Player {
         int ID = 0;
         boolean uniqueGameID = false;
 
-        if (isAssigned) {
-            throw new UnsupportedOperationException("Player ID is set. No further changes allowed");
-        }
         while (!uniqueGameID) {
             ID = 10000 + rand.nextInt(90000);
             uniqueGameID = true;
