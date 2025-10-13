@@ -21,8 +21,12 @@ public class Table{
             Scanner scanner = new Scanner(System.in);
             int choice = scanner.nextInt();
 
-            if(choice != 1 && choice != 2){
-                throw new IllegalArgumentException("Choice must be either 1 or 2");
+            try {
+                if(choice != 1 && choice != 2){
+                    throw new IllegalArgumentException("Choice must be either 1 or 2");
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error: " + e.getMessage());
             }
             if(choice == 1){
                 continue;
