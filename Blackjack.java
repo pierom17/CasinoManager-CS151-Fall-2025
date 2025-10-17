@@ -1,10 +1,11 @@
 import java.util.Random;
 
-public class Blackjack extends Game implements Playable {
+public class Blackjack extends Game {
     // Simplified logic of Blackjack game
     private boolean roundOver = false;
     private boolean playerStands = false;
     private boolean dealerStands = false;
+    private boolean playerHasHit = false;
     private double playerHandValue = 0.0;
     private double dealerHandValue = 0.0;
     private double currentPlayerBet = 0.0;
@@ -28,6 +29,7 @@ public class Blackjack extends Game implements Playable {
         roundOver = false;
         playerStands = false;
         dealerStands = false;
+        playerHasHit = false;
         lastAmount = 0.0;
         dealerHandValue = drawCard() + drawCard();
         playerHandValue = drawCard() + drawCard();
@@ -38,16 +40,29 @@ public class Blackjack extends Game implements Playable {
     private void hit(){
         if (roundOver || playerStands || dealerStands) return;
         playerHandValue += drawCard();
-        dealerHandValue += drawCard();
+        playerHasHit = true;
         checkPlayerOver21();
     }
-    //for simplicity, if the player stands, the dealer will stand too
     private void stand(){
         if (roundOver) return;
         playerStands = true;
+        System.out.printf("Player Stands at sum of: %.2f\n", playerHandValue);
+        
+        System.out.println("Dealer's turn:");
+        while (dealerHandValue < 17) {
+            dealerHandValue += drawCard();
+            System.out.printf("Dealer draws a card. Dealer hand value: %.2f\n", dealerHandValue);
+            
+            if (dealerHandValue > 21) {
+                System.out.println("Dealer busted!");
+                break;
+            }
+        }
+        
+        if (dealerHandValue <= 21) {
+            System.out.printf("Dealer stands at: %.2f\n", dealerHandValue);
+        }
         dealerStands = true;
-        System.out.printf("Player Stands at sum of: %f\n", playerHandValue);
-        System.out.printf("Dealer Stands at sum of: %f\n", dealerHandValue);
         roundOver = true;
         settle(currentPlayerBet);
     }
@@ -56,15 +71,28 @@ public class Blackjack extends Game implements Playable {
      * @return currentPlayerBet double variable times 2
      */
     private double doubleDown(){
-        // get bet from the Player class
-        //return bet *= 2.0;
-        if(roundOver) return currentPlayerBet;
-        double doubledBet = currentPlayerBet * 2;
-        System.out.printf("Doubled Down Bet. New bet value is: %.1f\n", doubledBet);
-        // Means game still is going on
-        if (!checkPlayerOver21()) {
-            stand();
+        if(roundOver || playerHasHit) {
+            if (playerHasHit) {
+                System.out.println("You can only double down on your original two cards!");
+            }
+            return currentPlayerBet;
         }
+        
+        currentPlayerBet = currentPlayerBet * 2;
+        System.out.printf("Doubled Down Bet. New bet value is: %.1f\n", currentPlayerBet);
+        
+        playerHandValue += drawCard();
+        playerHasHit = true;
+        System.out.printf("You drew a card. Your new hand value is: %.2f\n", playerHandValue);
+        
+        if (playerHandValue > 21) {
+            System.out.println("You busted! The cards add over 21!");
+            betLoss(currentPlayerBet);
+            return currentPlayerBet;
+        }
+        
+        System.out.println("After doubling down, you must stand.");
+        stand();
         return currentPlayerBet;
     }
 
@@ -77,16 +105,15 @@ public class Blackjack extends Game implements Playable {
         return false;
     }
     private void settle(double amount){
-        if (roundOver) return;
-
         if (dealerHandValue > 21){
-            System.out.println("You lost! The cards add over 21!");
-            betLoss(currentPlayerBet);
+            System.out.println("You won! The dealer busted!");
+            betWin(currentPlayerBet);
         } else if (dealerHandValue > playerHandValue){
             System.out.println("You lost! The dealer's cards are closer to 21 than yours!");
             betLoss(currentPlayerBet);
         } else if (dealerHandValue < playerHandValue) {
             System.out.println("You won! Your cards are closer to 21!");
+            betWin(currentPlayerBet);
         } else {
             System.out.println("Push");
             betPush();
@@ -115,17 +142,17 @@ public class Blackjack extends Game implements Playable {
     private void betWin(double amount){
         roundOver = true;
         lastAmount += amount;
-        System.out.printf("After your win, your current money is: ", lastAmount);
+        System.out.printf("After your win, your current money is: $%.2f\n", lastAmount);
     }
     private void betLoss(double amount){
         roundOver = true;
         lastAmount -= amount;
-        System.out.printf("After your loss, your current money is: ", lastAmount);
+        System.out.printf("After your loss, your current money is: $%.2f\n", lastAmount);
     }
     private void betPush(){
         roundOver = true;
         currentPlayerBet = lastAmount;
-        System.out.println("After the Blackjack, your current money is: " + lastAmount);
+        System.out.println("After the Blackjack, your current money is: $" + lastAmount);
     }
 
     @Override
@@ -150,8 +177,8 @@ public class Blackjack extends Game implements Playable {
         //If it ended, then end the game
 
         while (!roundOver && !playerStands && !dealerStands) {
-            System.out.printf("Your total hand value right now is: ", playerHandValue);
-            String action = UserInput.readNextLine("What do you want to do: Enter 'H' to Hit, 'D' to Double Down, or 'S' to Stand").toUpperCase().trim();
+            System.out.printf("Your total hand value right now is: %.2f\n", playerHandValue);
+            String action = UserInput.readNextLine("What do you want to do? Enter 'H' to Hit, 'D' to Double Down, or 'S' to Stand: ").toUpperCase().trim();
             switch (action) {
                 case "H":
                     hit();
@@ -161,8 +188,9 @@ public class Blackjack extends Game implements Playable {
                     break;
                 case "D":
                     doubleDown();
+                    break;
                 default:
-                    System.out.println("You can only enter one of those letters or EXIT to exit the game.");
+                    System.out.println("You can only enter one of those letters (H, D, S) or EXIT to exit the game.");
             }
         }
         if (roundOver) {

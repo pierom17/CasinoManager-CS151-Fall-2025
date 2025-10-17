@@ -229,4 +229,4 @@ public class Roulette extends Game {
 
         return (winnings -= ( betValues * bets.size() )); // Subtracts the amount the player bet from their winnings to get their net earnings
     }
-    
+}
