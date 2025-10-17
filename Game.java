@@ -1,3 +1,6 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public abstract class Game implements Playable {
 
     private static int nextGameID = 1;
@@ -5,6 +8,7 @@ public abstract class Game implements Playable {
     private final int gameID;
     private double requiredBet;
     private boolean gameStarted;
+    private LocalDateTime startTime;
 
     public Game(String gameName, double requiredBet) {
         if (gameName == null || gameName.isBlank()) {
@@ -17,6 +21,7 @@ public abstract class Game implements Playable {
         this.gameID = nextGameID++;
         this.requiredBet = requiredBet;
         this.gameStarted = false;
+        this.startTime = null;
     }
 
     public abstract String getName();
@@ -32,6 +37,9 @@ public abstract class Game implements Playable {
 
     public void setGameStarted(boolean gameStarted) {
         this.gameStarted = gameStarted;
+        if (gameStarted) {
+            this.startTime = LocalDateTime.now();
+        }
     }
 
     public void updateRequiredBet(double newBet) {
@@ -40,6 +48,24 @@ public abstract class Game implements Playable {
             return;
         }
         this.requiredBet = newBet;
+    }
+
+    public void resetGame() {
+        this.gameStarted = false;
+        this.startTime = null;
+        System.out.println("Game reset successfully for: " + gameName);
+    }
+
+    public void printSummary() {
+        String timeStr = (startTime == null) ? "N/A" :
+            startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        System.out.println("==== Game Summary ====");
+        System.out.println("Name: " + gameName);
+        System.out.println("ID: " + gameID);
+        System.out.println("Required Bet: $" + String.format("%.2f", requiredBet));
+        System.out.println("Started: " + (gameStarted ? "Yes" : "No"));
+        System.out.println("Start Time: " + timeStr);
+        System.out.println("======================");
     }
 
     @Override
