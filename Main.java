@@ -1,15 +1,16 @@
 public class Main {
     private static int menuChoice;
+    private static Player player;
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         String name = UserInput.readNextLine("Please enter your name: ");
-        double balance = UserInput.readNextInt("Enter starting balance: ");
+        double balance = UserInput.readNextDouble("Enter starting balance: ");
         System.out.println();
         System.out.printf("    Welcome to our Casino %s!       ", name);
         System.out.println();
         System.out.printf("  Your starting balance is: %.2f       ", balance);
         System.out.println();
-        Player player = new Player(name, balance);
+        player = new Player(name, balance);
         player.setPlayerID();
         System.out.println(player);
 
@@ -45,7 +46,7 @@ public class Main {
                     break;
                 case 2:
                     System.out.print("Blackjack\n");
-                    Blackjack bj = new Blackjack();
+                    Blackjack bj = new Blackjack(player); // added
                     Table t2 = new Table(bj);
                     t2.playGame();
                     break;
