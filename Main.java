@@ -2,14 +2,21 @@ public class Main {
     private static int menuChoice;
 
     public static void main(String args[]) {
+        int age = UserInput.readAge("Please enter your age: ");
+        if (age < 0) {
+            throw new IllegalArgumentException("Invalid age.");
+        }
         String name = UserInput.readNextLine("Please enter your name: ");
         double balance = UserInput.readNextInt("Enter starting balance: ");
+        if (balance < 0) {
+            throw new IllegalArgumentException("Invalid starting balance.");
+        }
         System.out.println();
         System.out.printf("    Welcome to our Casino %s!       ", name);
         System.out.println();
         System.out.printf("  Your starting balance is: %.2f       ", balance);
         System.out.println();
-        Player player = new Player(name, balance);
+        Player player = new Player(name, balance, age);
         player.setPlayerID();
         System.out.println(player);
 
@@ -24,6 +31,7 @@ public class Main {
         System.out.println("            1. Roulette             ");
         System.out.println("            2. Blackjack            ");
         System.out.println("            3. Craps                ");
+        System.out.println("            4. Player survey        ");
         System.out.println("            0. Exit                 ");
 
         int choice = UserInput.readNextInt("  What game would you like to play?\n");
@@ -55,6 +63,9 @@ public class Main {
                     Table t3 = new Table(c);
                     t3.playGame();
                     break;
+                case 4:
+                    System.out.println("Player Survey\n");
+                    UserInput.survey();
             }
             System.out.println("! Good luck!");
         }
