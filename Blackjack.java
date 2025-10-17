@@ -90,7 +90,7 @@ public class Blackjack extends Game implements Playable {
         if (roundOver) return;
 
         if (dealerHandValue > 21){
-            System.out.println("You lost! The cards add over 21!");
+            System.out.println("Dealer busts! You win!");
             betWin(amount);
         } else if (dealerHandValue > playerHandValue){
             System.out.println("You lost! The dealer's cards are closer to 21 than yours!");
