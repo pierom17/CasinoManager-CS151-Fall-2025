@@ -15,6 +15,21 @@ public class Player {
         this.playerBalance = playerBalance;
     }
 
+    //new - shu saw
+    /**
+     * currently the game only checks how much you gain and lost from each game
+     * but it doesn't add or subtract from the player's original amount
+     * so creating two methods which gets the player's balance and updating the balance is a must
+     * @return
+     */
+    public double getPlayerBalance(){
+        return playerBalance;
+    }
+
+    public double updateBalance(double change){
+        return playerBalance = playerBalance + change;
+    }
+
     public String getPlayerName() {
         return playerName;
     }
@@ -43,7 +58,7 @@ public class Player {
     }
 
     public void displayPlayerBalance() {
-        System.out.printf("%s's available funds: $.2f", playerName, playerBalance);
+        System.out.printf("%s's available funds: $%.2f", playerName, playerBalance);
         System.out.println();
     }
 
@@ -67,6 +82,27 @@ public class Player {
             playerBalance -= amount;
             System.out.printf("$%.2f withdrawn successfully from %s's account.", amount, playerBalance);
         }
+    }
+
+    //new - shu saw
+    //needed to implement the user not being able to play anymore because their total balance is 0 or negative
+    public boolean canAffordToPlay() {
+        return playerBalance >= 0.0;
+    }
+
+    public boolean deductBet(double amount) {
+        if (amount <= 0) {
+            System.out.println("Bet amount must be positive");
+            return false;
+        }
+        if (amount > playerBalance) {
+            System.out.printf("%s has insufficient funds for a $%.2f bet", playerName, amount);
+            System.out.printf("Balance: $%.2f.%n", playerBalance);
+            return false;
+        }
+        
+        playerBalance = playerBalance - amount;
+        return true;
     }
 
     @Override

@@ -195,6 +195,15 @@ public class Roulette extends Game {
             System.out.println(choice + " is not a valid choice.");
         }
     }
+    //new - shu
+    @Override
+    public boolean deductRequiredBet(Player player) {
+        double requiredBet = getRequiredBet();
+        if (player.deductBet(requiredBet)) {
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public double earned() { // Calculates how much the player won based on their bets, if any at all
@@ -226,7 +235,8 @@ public class Roulette extends Game {
         else {
             System.out.println("You didn't win anything this round.\n");
         }
-
-        return (winnings -= ( betValues * bets.size() )); // Subtracts the amount the player bet from their winnings to get their net earnings
+        double totalBet = betValues * bets.size();
+        return winnings - totalBet; // Subtracts the amount the player bet from their winnings to get their net earnings
     }
+}
     

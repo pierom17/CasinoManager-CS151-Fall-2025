@@ -93,6 +93,16 @@ public class Craps extends Game implements Playable{
         this.moneyEarned += m;
     }
 
+    //new - shu
+    @Override
+    public boolean deductRequiredBet(Player player) {
+        double requiredBet = getRequiredBet();
+        if (player.deductBet(requiredBet)) {
+            return true;
+        }
+        return false;
+    }
+
     @Override //from Playable.java
     public void play(){
         setGameStarted(true);

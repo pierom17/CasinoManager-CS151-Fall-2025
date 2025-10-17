@@ -13,13 +13,25 @@ public class Main {
         player.setPlayerID();
         System.out.println(player);
 
+
         do {
-            menuChoice = menu();
+            menuChoice = menu(player);
+
+            //new - shu saw
+            //checks if player's balance is >=0, if its not then end the simulation because they can no longer gamble
+            if (menuChoice != 0 && !player.canAffordToPlay()) {
+                System.out.println("\nYour current balance is $0.00 or less. The house requires you to leave!");
+                menuChoice = 0; // Force exit
+            }
         }
         while(menuChoice != 0);
     }
 
-    public static int menu() {
+    public static int menu(Player player) {
+        //new - shu saw , checks within start of menu loop
+        if (!player.canAffordToPlay()) {
+            return 0; 
+        }
         System.out.println();
         System.out.println("            1. Roulette             ");
         System.out.println("            2. Blackjack            ");
@@ -40,19 +52,19 @@ public class Main {
                 case 1:
                     System.out.print("Roulette\n");
                     Roulette r = new Roulette();
-                    Table t1 = new Table(r);
+                    Table t1 = new Table(r, player);
                     t1.playGame();
                     break;
                 case 2:
                     System.out.print("Blackjack\n");
                     Blackjack bj = new Blackjack();
-                    Table t2 = new Table(bj);
+                    Table t2 = new Table(bj, player);
                     t2.playGame();
                     break;
                 case 3:
                     System.out.print("Craps\n");
                     Craps c = new Craps();
-                    Table t3 = new Table(c);
+                    Table t3 = new Table(c, player);
                     t3.playGame();
                     break;
             }

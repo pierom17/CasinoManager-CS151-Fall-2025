@@ -128,6 +128,16 @@ public class Blackjack extends Game implements Playable {
         System.out.println("After the Blackjack, your current money is: " + lastAmount);
     }
 
+    //new - shu
+    @Override
+    public boolean deductRequiredBet(Player player) {
+        double requiredBet = getRequiredBet();
+        if (player.deductBet(requiredBet)) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void play(){
         setGameStarted(true);
