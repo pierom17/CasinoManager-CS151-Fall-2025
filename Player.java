@@ -6,13 +6,15 @@ public class Player {
     private String playerName;
     private int playerID;
     private double playerBalance;
+    private int playerAge;
 
     private static final List<Integer> usedPlayerIDs = new ArrayList<>();
     private static int counter = 0;
 
-    public Player(String playerName, double playerBalance) {
+    public Player(String playerName, double playerBalance, int playerAge) {
         this.playerName = playerName;
         this.playerBalance = playerBalance;
+        this.playerAge = playerAge;
     }
 
     public String getPlayerName() {
@@ -44,6 +46,9 @@ public class Player {
 
     public void displayPlayerBalance() {
         System.out.printf("%s's available funds: $.2f", playerName, playerBalance);
+        if (playerBalance < 20) {
+            System.out.println("Balance is running low!");
+        }
         System.out.println();
     }
 
@@ -66,6 +71,8 @@ public class Player {
         } else {
             playerBalance -= amount;
             System.out.printf("$%.2f withdrawn successfully from %s's account.", amount, playerBalance);
+        }         if (playerBalance < 20) {
+            System.out.println("Balance is running low!");
         }
     }
 
