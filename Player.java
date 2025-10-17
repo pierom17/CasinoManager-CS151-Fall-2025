@@ -1,11 +1,17 @@
+
 import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
 
 public class Player {
+
     private String playerName;
     private int playerID;
     private double playerBalance;
+    private int gamesPlayed = 0;
+    private int gamesWon = 0;
+    private double totalMoneyWon = 0.0;
+    private double totalMoneyLost = 0.0;
 
     private static final List<Integer> usedPlayerIDs = new ArrayList<>();
     private static int counter = 0;
@@ -15,6 +21,22 @@ public class Player {
         this.playerBalance = playerBalance;
     }
 
+    public int getGamesPlayed() {
+        return gamesPlayed;
+    }
+
+    public int getGamesWon() {
+        return gamesWon;
+    }
+
+    public double getTotalMoneyWon() {
+        return totalMoneyWon;
+    }
+
+    public double getTotalMoneyLost() {
+        return totalMoneyLost;
+    }
+
     public String getPlayerName() {
         return playerName;
     }
@@ -22,6 +44,7 @@ public class Player {
     public int getPlayerID() {
         return playerID;
     }
+
     public void setPlayerID() {
         Random rand = new Random();
         int ID = 0;
@@ -67,6 +90,42 @@ public class Player {
             playerBalance -= amount;
             System.out.printf("$%.2f withdrawn successfully from %s's account.", amount, playerBalance);
         }
+    }
+
+    //  Player Statistics Tracking 
+    public void recordGame(boolean won, double amountChange) {
+        gamesPlayed++;
+        if (won) {
+            gamesWon++;
+            totalMoneyWon += amountChange;
+        } else {
+            totalMoneyLost += Math.abs(amountChange);
+        }
+    }
+
+    public void displayStats() {
+        System.out.println("\nPlayer Statistics for " + playerName + ":");
+        System.out.printf("Games Played: %d%n", gamesPlayed);
+        System.out.printf("Games Won: %d%n", gamesWon);
+        System.out.printf("Total Money Won: $%.2f%n", totalMoneyWon);
+        System.out.printf("Total Money Lost: $%.2f%n", totalMoneyLost);
+        double net = totalMoneyWon - totalMoneyLost;
+        System.out.printf("Net Earnings: $%.2f%n", net);
+        
+        double winRate = 0.0;
+        if (gamesPlayed > 0) {
+            double ratio = (double) gamesWon / gamesPlayed;
+            winRate = ratio * 100;
+        }
+        System.out.printf("Win Rate: %.1f%%%n", winRate);
+    }
+
+    public void resetStats() {
+        gamesPlayed = 0;
+        gamesWon = 0;
+        totalMoneyWon = 0.0;
+        totalMoneyLost = 0.0;
+        System.out.println("All stats reset.");
     }
 
     @Override
