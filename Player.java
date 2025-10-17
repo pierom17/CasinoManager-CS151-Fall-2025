@@ -15,6 +15,14 @@ public class Player {
         this.playerBalance = playerBalance;
     }
 
+    public void addBalance(double delta) {
+        this.playerBalance += delta;
+    }
+    public double getBalance() {
+        return this.playerBalance;
+    }
+
+
     public String getPlayerName() {
         return playerName;
     }
