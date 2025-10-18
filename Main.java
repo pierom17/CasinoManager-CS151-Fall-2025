@@ -33,6 +33,7 @@ public class Main {
         }
         else if (choice == 0) {
             System.out.println("Thanks for coming. See you next time!");
+            Table.printHistory();
         }
         else {
             System.out.print("You chose ");
